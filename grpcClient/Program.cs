@@ -7,26 +7,44 @@ internal class Program
 {
     static async Task Main(string[] args)
     {
-        ///Unary servis örneklendirilmesi yapılmıştur
+       
         var channel = GrpcChannel.ForAddress("http://localhost:5296");
         var messageClient = new Message.MessageClient(channel);
 
-        //Client streaming
-        var resp = messageClient.SendMessage();
-        for (int i = 0; i < 10; i++)
-        {
-            await Task.Delay(1000);
-            await resp.RequestStream.WriteAsync(new MessageRequest
+        CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
+        var res = messageClient.SendMessage();
+        var task1 = Task.Run(async ()=>{
+            for (int i = 0; i < 10; i++)
             {
-                Name = "tyfan",
+                await Task.Delay(1000);
+                res.RequestStream.WriteAsync(new MessageRequest{Name="tufan", Message = "mesaj" +i});
+            }
+        });
 
-                Message = "mesa " + i
-            });
+        while (await res.ResponseStream.MoveNext(cancellationTokenSource.Token))
+        {
+             System.Console.WriteLine(res.ResponseStream.Current.Message);
         }
 
-        await resp.RequestStream.CompleteAsync();
+        await task1;
+        await res.RequestStream.CompleteAsync();
 
-        System.Console.WriteLine((await resp.ResponseAsync).Message);
+        // //Client streaming
+        // var resp = messageClient.SendMessage();
+        // for (int i = 0; i < 10; i++)
+        // {
+        //     await Task.Delay(1000);
+        //     await resp.RequestStream.WriteAsync(new MessageRequest
+        //     {
+        //         Name = "tyfan",
+
+        //         Message = "mesa " + i
+        //     });
+        // }
+
+        // await resp.RequestStream.CompleteAsync();
+
+        // System.Console.WriteLine((await resp.ResponseAsync).Message);
 
         //Server streaming
         //    var response =  messageClient.SendMessage(new MessageRequest
