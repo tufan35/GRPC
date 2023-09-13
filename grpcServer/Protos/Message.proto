@@ -6,7 +6,7 @@ package message;
 
 //eğeerki return modelinde basına stream eklersem server streaming model i dönmektedir.
 service Message {
-  rpc SendMessage (MessageRequest) returns (stream MessageResponse);
+  rpc SendMessage (stream MessageRequest) returns ( MessageResponse);
 }
 
 message MessageRequest {

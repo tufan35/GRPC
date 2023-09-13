@@ -5,25 +5,42 @@ using grpcServer;
 
 internal class Program
 {
-    private static async Task Main(string[] args)
+    static async Task Main(string[] args)
     {
         ///Unary servis örneklendirilmesi yapılmıştur
         var channel = GrpcChannel.ForAddress("http://localhost:5296");
         var messageClient = new Message.MessageClient(channel);
 
-        //Server streaming
-       var response =  messageClient.SendMessage(new MessageRequest
+        //Client streaming
+        var resp = messageClient.SendMessage();
+        for (int i = 0; i < 10; i++)
         {
-            Name = "Merhaba",
-            Message = "Tufan"
-        });
+            await Task.Delay(1000);
+            await resp.RequestStream.WriteAsync(new MessageRequest
+            {
+                Name = "tyfan",
 
-        CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
-
-        while (await response.ResponseStream.MoveNext(cancellationTokenSource.Token))
-        {
-            System.Console.WriteLine(response.ResponseStream.Current.Message);
+                Message = "mesa " + i
+            });
         }
+
+        await resp.RequestStream.CompleteAsync();
+
+        System.Console.WriteLine((await resp.ResponseAsync).Message);
+
+        //Server streaming
+        //    var response =  messageClient.SendMessage(new MessageRequest
+        //     {
+        //         Name = "Merhaba",
+        //         Message = "Tufan"
+        //     });
+
+        //     CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
+
+        //     while (await response.ResponseStream.MoveNext(cancellationTokenSource.Token))
+        //     {
+        //         System.Console.WriteLine(response.ResponseStream.Current.Message);
+        //     }
 
 
         //Unary
