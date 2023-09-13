@@ -1,4 +1,5 @@
-﻿using Grpc.Net.Client;
+﻿using Grpc.Core;
+using Grpc.Net.Client;
 using grpcMessageClient;
 using grpcServer;
 
@@ -9,19 +10,36 @@ internal class Program
         ///Unary servis örneklendirilmesi yapılmıştur
         var channel = GrpcChannel.ForAddress("http://localhost:5296");
         var messageClient = new Message.MessageClient(channel);
-        MessageResponse response = await messageClient.SendMessageAsync(new MessageRequest{
-            Name ="Merhaba",
-            Message ="Tufan"
+
+        //Server streaming
+       var response =  messageClient.SendMessage(new MessageRequest
+        {
+            Name = "Merhaba",
+            Message = "Tufan"
         });
 
-        System.Console.WriteLine(response.Message);
+        CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
 
-    //     var greatClient = new Greeter.GreeterClient(channel);
-    //    HelloReply resut =  await greatClient.SayHelloAsync(new HelloRequest
-    //     {
-    //         Name = "Tufandan selamlar "
-    //     });
+        while (await response.ResponseStream.MoveNext(cancellationTokenSource.Token))
+        {
+            System.Console.WriteLine(response.ResponseStream.Current.Message);
+        }
 
-    //     Console.WriteLine(resut.Message);
+
+        //Unary
+        // MessageResponse response = await messageClient.SendMessageAsync(new MessageRequest{
+        //     Name ="Merhaba",
+        //     Message ="Tufan"
+        // });
+
+        //System.Console.WriteLine(response.Message);
+
+        //     var greatClient = new Greeter.GreeterClient(channel);
+        //    HelloReply resut =  await greatClient.SayHelloAsync(new HelloRequest
+        //     {
+        //         Name = "Tufandan selamlar "
+        //     });
+
+        //     Console.WriteLine(resut.Message);
     }
 }

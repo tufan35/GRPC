@@ -52,7 +52,7 @@ namespace grpcMessageClient {
 
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
     static readonly grpc::Method<global::grpcMessageClient.MessageRequest, global::grpcMessageClient.MessageResponse> __Method_SendMessage = new grpc::Method<global::grpcMessageClient.MessageRequest, global::grpcMessageClient.MessageResponse>(
-        grpc::MethodType.Unary,
+        grpc::MethodType.ServerStreaming,
         __ServiceName,
         "SendMessage",
         __Marshaller_message_MessageRequest,
@@ -92,24 +92,14 @@ namespace grpcMessageClient {
       }
 
       [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-      public virtual global::grpcMessageClient.MessageResponse SendMessage(global::grpcMessageClient.MessageRequest request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+      public virtual grpc::AsyncServerStreamingCall<global::grpcMessageClient.MessageResponse> SendMessage(global::grpcMessageClient.MessageRequest request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
       {
         return SendMessage(request, new grpc::CallOptions(headers, deadline, cancellationToken));
       }
       [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-      public virtual global::grpcMessageClient.MessageResponse SendMessage(global::grpcMessageClient.MessageRequest request, grpc::CallOptions options)
+      public virtual grpc::AsyncServerStreamingCall<global::grpcMessageClient.MessageResponse> SendMessage(global::grpcMessageClient.MessageRequest request, grpc::CallOptions options)
       {
-        return CallInvoker.BlockingUnaryCall(__Method_SendMessage, null, options, request);
-      }
-      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-      public virtual grpc::AsyncUnaryCall<global::grpcMessageClient.MessageResponse> SendMessageAsync(global::grpcMessageClient.MessageRequest request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
-      {
-        return SendMessageAsync(request, new grpc::CallOptions(headers, deadline, cancellationToken));
-      }
-      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-      public virtual grpc::AsyncUnaryCall<global::grpcMessageClient.MessageResponse> SendMessageAsync(global::grpcMessageClient.MessageRequest request, grpc::CallOptions options)
-      {
-        return CallInvoker.AsyncUnaryCall(__Method_SendMessage, null, options, request);
+        return CallInvoker.AsyncServerStreamingCall(__Method_SendMessage, null, options, request);
       }
       /// <summary>Creates a new instance of client from given <c>ClientBaseConfiguration</c>.</summary>
       [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]

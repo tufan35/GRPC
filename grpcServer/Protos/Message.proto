@@ -4,8 +4,9 @@ option csharp_namespace = "grpcMessageServer";
 
 package message;
 
+//eğeerki return modelinde basına stream eklersem server streaming model i dönmektedir.
 service Message {
-  rpc SendMessage (MessageRequest) returns (MessageResponse);
+  rpc SendMessage (MessageRequest) returns (stream MessageResponse);
 }
 
 message MessageRequest {
