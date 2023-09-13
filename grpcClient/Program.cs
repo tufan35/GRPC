@@ -6,6 +6,7 @@ internal class Program
 {
     private static async Task Main(string[] args)
     {
+        ///Unary servis örneklendirilmesi yapılmıştur
         var channel = GrpcChannel.ForAddress("http://localhost:5296");
         var messageClient = new Message.MessageClient(channel);
         MessageResponse response = await messageClient.SendMessageAsync(new MessageRequest{
