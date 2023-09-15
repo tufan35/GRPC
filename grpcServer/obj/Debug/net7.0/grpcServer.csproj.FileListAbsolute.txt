@@ -66,3 +66,4 @@ E:\Dokumanlarim\C#\Grpc\grpcServer\obj\Debug\net7.0\refint\grpcServer.dll
 E:\Dokumanlarim\C#\Grpc\grpcServer\obj\Debug\net7.0\grpcServer.pdb
 E:\Dokumanlarim\C#\Grpc\grpcServer\obj\Debug\net7.0\grpcServer.genruntimeconfig.cache
 E:\Dokumanlarim\C#\Grpc\grpcServer\obj\Debug\net7.0\ref\grpcServer.dll
+E:\Dokumanlarim\C#\Grpc\grpcServer\bin\Debug\net7.0\grpcServer.staticwebassets.runtime.json

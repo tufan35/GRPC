@@ -1,27 +1,35 @@
-﻿using Grpc.Net.Client;
-using grpcMessageClient;
-using grpcServer;
+﻿using Google.Protobuf;
+using Grpc.Net.Client;
+using grpcFileTransportClient;
 
-internal class Program
+class Program
 {
-    private static async Task Main(string[] args)
+    public static async Task Main(string[] args)
     {
-        ///Unary servis örneklendirilmesi yapılmıştur
         var channel = GrpcChannel.ForAddress("http://localhost:5296");
-        var messageClient = new Message.MessageClient(channel);
-        MessageResponse response = await messageClient.SendMessageAsync(new MessageRequest{
-            Name ="Merhaba",
-            Message ="Tufan"
-        });
 
-        System.Console.WriteLine(response.Message);
+        var client = new FileService.FileServiceClient(channel);
 
-    //     var greatClient = new Greeter.GreeterClient(channel);
-    //    HelloReply resut =  await greatClient.SayHelloAsync(new HelloRequest
-    //     {
-    //         Name = "Tufandan selamlar "
-    //     });
+        string file = @"C:\Users\TUFAN\Desktop\document.pdf";
 
-    //     Console.WriteLine(resut.Message);
+        using FileStream fileStream = new FileStream(file, FileMode.Open);
+
+        var content = new BytesContent
+        {
+            FileSize = fileStream.Length,
+            ReadedByte = 0,
+            Info = new grpcFileTransportClient.FileInfo { FileName = Path.GetFileNameWithoutExtension(fileStream.Name), FileExtension = Path.GetExtension(fileStream.Name) }
+        };
+
+        var upload = client.FileUpload();
+        byte[] buffer = new byte[2048];
+
+        while ((content.ReadedByte = await fileStream.ReadAsync(buffer, 0, buffer.Length)) > 0)
+        {
+            content.Buffer = ByteString.CopyFrom(buffer);
+            await upload.RequestStream.WriteAsync(content);
+        }
+        await upload.RequestStream.CompleteAsync();
+        fileStream.Close();
     }
 }

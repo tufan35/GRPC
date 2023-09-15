@@ -1,0 +1,9 @@
+Bu uggulamlada 
+grpc service aracığıyla clientler upload ve download işlemi yapmaktadır. 
+
+clientlerda olması gereken kütüphanaler 
+//dotnet add package Google.Protobuf --version 3.24.3
+//dotnet add package Grpc.Net.Client --version 2.57.0
+//dotnet add package Grpc.Tools --version 2.58.0
+
+dotnet run yazarak ilgili dosya path yollarını vererek yükleme ve indirme işlemlerini test dilebilri

@@ -1,11 +1,37 @@
 {
   "Version": 1,
-  "Hash": "951bj/GqbsC4/hR1xILMMX7b7QRfzeGMfZ8sIXwigRk=",
+  "Hash": "GPkPyrdy3IXUU7hBKF52nRqV61t48fG5WfO4kciutac=",
   "Source": "grpcServer",
   "BasePath": "_content/grpcServer",
   "Mode": "Default",
   "ManifestType": "Build",
   "ReferencedProjectsConfiguration": [],
-  "DiscoveryPatterns": [],
-  "Assets": []
+  "DiscoveryPatterns": [
+    {
+      "Name": "grpcServer\\wwwroot",
+      "Source": "grpcServer",
+      "ContentRoot": "E:\\Dokumanlarim\\C#\\Grpc\\grpcServer\\wwwroot\\",
+      "BasePath": "_content/grpcServer",
+      "Pattern": "**"
+    }
+  ],
+  "Assets": [
+    {
+      "Identity": "E:\\Dokumanlarim\\C#\\Grpc\\grpcServer\\wwwroot\\files\\document.pdf",
+      "SourceId": "grpcServer",
+      "SourceType": "Discovered",
+      "ContentRoot": "E:\\Dokumanlarim\\C#\\Grpc\\grpcServer\\wwwroot\\",
+      "BasePath": "_content/grpcServer",
+      "RelativePath": "files/document.pdf",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\files\\document.pdf"
+    }
+  ]
 }
